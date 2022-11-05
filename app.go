@@ -2,8 +2,7 @@ package main
 
 import (
 	"net/http"
-
-	"github.com/kevinhaube/universe-go/services/status"
+	"universe-go/services/status"
 )
 
 func main() {
