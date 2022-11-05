@@ -1,9 +1,9 @@
 package vessel
 
-type VesselOption string
+type VesselOption int
 
 const (
-	Burrito VesselOption = "burrito"
-	Bowl    VesselOption = "bowl"
-	Taco    VesselOption = "taco"
+	Burrito VesselOption = iota
+	Bowl
+	Taco
 )

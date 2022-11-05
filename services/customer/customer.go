@@ -3,14 +3,15 @@ package customer
 import (
 	"math/rand"
 	"time"
+	"universe-go/models/ingredients"
 	"universe-go/models/order"
-	"universe-go/services/ordering"
+	"universe-go/services/restaurant/ordering"
 )
 
 // Randomly select an ingredient from an array of choices
 // mimicking the behavior of a customer choosing between white or brown rice
 // for example.
-func chooseIngredient(choices []order.IngredientOption) order.IngredientOption {
+func chooseIngredient(choices []ingredients.MealIngredient) ingredients.MealIngredient {
 	index := rand.Intn(len(choices) - 1)
 	return choices[index]
 }
@@ -24,15 +25,11 @@ func chooseOnTheSide() bool {
 
 // Compiles the Option structure, like a customer choosing ingredients for
 // their meal.
-func MakeOption(choices []order.IngredientOption) order.CustomerChoice {
-	ingredient := chooseIngredient(choices)
-	multiplier := rand.Intn(2) + 1
-	side := chooseOnTheSide()
-
+func MakeOption(choices []ingredients.MealIngredient) order.CustomerChoice {
 	return order.CustomerChoice{
-		Ingredient: ingredient,
-		Multiplier: multiplier,
-		Side:       side,
+		Ingredient: chooseIngredient(choices),
+		Multiplier: rand.Intn(2) + 1,
+		Side:       chooseOnTheSide(),
 	}
 }
 
