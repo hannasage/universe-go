@@ -4,6 +4,7 @@ import (
 	"math/rand"
 	"time"
 	"universe-go/models/order"
+	"universe-go/services/ordering"
 )
 
 // Randomly select an ingredient from an array of choices
@@ -35,22 +36,18 @@ func MakeOption(choices []order.IngredientOption) order.CustomerChoice {
 	}
 }
 
-// Goroutine managing the customer queue growth
-func queueGrowth(customerQueue chan<- int) {
-	nextCustomerInQueue := 0
-	for {
-		nextCustomerTimeout := rand.Intn(10) // Simulate randomly timed queue growth
-		time.Sleep(time.Second * time.Duration(nextCustomerTimeout))
-		nextCustomerInQueue += 1
-		customerQueue <- nextCustomerInQueue
-	}
-}
-
 // Creates a channel and starts a Goroutine that adds a new customer to the
 // queue every random-n seconds. The queue uses a shared channel to coordinate
 // with the OrderTaker.
 func Queue() {
 	customerQueue := make(chan int)
-	go queueGrowth(customerQueue)
+	go ordering.HandleCustomerQueue(customerQueue)
+	nextCustomerInQueue := 0
+	for {
+		nextCustomerInQueue += 1
+		customerQueue <- nextCustomerInQueue
+		nextCustomerTimeout := rand.Intn(10) // Simulate randomly timed queue growth
+		time.Sleep(time.Second * time.Duration(nextCustomerTimeout))
+	}
 	// TODO: How to keep queue running while the restaurant moves through the line
 }
