@@ -1,11 +1,7 @@
 package main
 
-import (
-	"net/http"
-	"universe-go/services/status"
-)
+import "universe-go/services/customer"
 
 func main() {
-	http.HandleFunc("/status", status.StatusCheck)
-	http.ListenAndServe(":8080", nil)
+	customer.Queue()
 }
