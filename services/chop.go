@@ -1,4 +1,4 @@
-package prep
+package services
 
 import (
 	"errors"
@@ -27,7 +27,7 @@ func verifyNeedsChop(list []ingredients.RawIngredient) ([]ingredients.RawIngredi
 
 func Chop(chopOrder []ingredients.RawIngredient) {
 	// Ensure we're only chopping the good stuff
-	chopList, chopErrors := verifyNeedsChop(chopOrder)
+	_, chopErrors := verifyNeedsChop(chopOrder)
 	if chopErrors != nil {
 		println(chopErrors)
 	}

@@ -1,7 +1,7 @@
 package main
 
-import "universe-go/services/customer-queue"
+import "universe-go/services"
 
 func main() {
-	customer.Queue()
+	services.StartCustomerQueue()
 }

@@ -1,11 +1,11 @@
-package customer
+package services
 
 import (
 	"math/rand"
 	"time"
 	ingredients "universe-go/models"
 	order "universe-go/models"
-	ordering "universe-go/services/restaurant/handlers"
+	ordering "universe-go/services/handlers"
 )
 
 // Randomly select an ingredient from an array of choices
@@ -36,7 +36,7 @@ func MakeOption(choices []ingredients.MealIngredient) order.CustomerChoice {
 // Creates a channel and starts a Goroutine that adds a new customer to the
 // queue every random-n seconds. The queue uses a shared channel to coordinate
 // with the OrderTaker.
-func Queue() {
+func StartCustomerQueue() {
 	customerQueue := make(chan int)
 	go ordering.HandleCustomerQueue(customerQueue)
 	nextCustomerInQueue := 0
