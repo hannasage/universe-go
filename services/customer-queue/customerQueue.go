@@ -3,9 +3,9 @@ package customer
 import (
 	"math/rand"
 	"time"
-	"universe-go/models/ingredients"
-	"universe-go/models/order"
-	"universe-go/services/restaurant/ordering"
+	ingredients "universe-go/models"
+	order "universe-go/models"
+	ordering "universe-go/services/restaurant/handlers"
 )
 
 // Randomly select an ingredient from an array of choices

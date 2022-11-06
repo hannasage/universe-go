@@ -1,4 +1,4 @@
-package ordering
+package handlers
 
 // Acts as the employee taking an order from a customer and building the
 // meal. Uses the IngredientLine to fulfill the order.

@@ -1,4 +1,4 @@
-package vessel
+package models
 
 type VesselOption int
 

@@ -1,4 +1,4 @@
-package ingredients
+package models
 
 type MealIngredient int
 type RawIngredient int
