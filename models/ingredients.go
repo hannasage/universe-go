@@ -1,22 +1,54 @@
 package models
 
-type MealIngredient int
 type RawIngredient int
+type ChopIngredient int
+type PreparedIngredient int
+type MealIngredient int
+type ChopInstruction int
 
+// Used by grill
 const (
-	// Grains
+	BrownRiceGrain RawIngredient = iota
+	WhiteRiceGrain
+	CitrusJuiceMix
+	Salt
+	Pepper
+	RawCorn
+)
+
+// Used by prep
+const (
+	Avocado ChopIngredient = iota
+	BellPepper
+	Cilantro
+	RedOnion
+	RomaineHead
+	Tomato
+)
+
+// Used by kitchen to stock line (make MealIngredient)
+const (
+	SlicedBellPepper PreparedIngredient = iota
+	ChoppedCilantro
+	DicedRedOnion
+	SlicedRedOnion
+	ChoppedRomaine
+	SlicedAvocado
+	DicedAvocado
+	DicedTomato
+)
+
+// Used by line to serve customers
+const (
 	WhiteRice MealIngredient = iota
 	BrownRice
-	// Beans
 	BlackBeans
 	PintoBeans
-	// Protein
 	Chicken
 	Steak
 	Barbacoa
 	Carnitas
 	Sofritas
-	// Extras
 	FejitaVeg
 	Queso
 	SalsaPico
@@ -29,17 +61,14 @@ const (
 	Guac
 )
 
+// Instruction on how to cut a ChopIngredient
 const (
-	BrownRiceGrain RawIngredient = iota
-	WhiteRiceGrain
-	Cilantro
-	CitrusJuiceMix
-	Salt
-	Pepper
-	RedOnion
-	BellPepper
-	Tomato
-	RawCorn
-	RomaineHead
-	Avocado
+	Dice ChopInstruction = iota
+	Slice
 )
+
+// Struct for a single request for Prep to chop
+type ChopItem struct {
+	Raw         ChopIngredient
+	Instruction ChopInstruction
+}

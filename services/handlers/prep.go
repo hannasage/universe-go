@@ -1,34 +1,38 @@
 package handlers
 
 import (
-	"errors"
 	ingredients "universe-go/models"
 )
 
-func verifyNeedsChop(list []ingredients.RawIngredient) ([]ingredients.RawIngredient, error) {
-	var toChop []ingredients.RawIngredient
-	for _, v := range list {
-		switch v {
-		case ingredients.BellPepper:
-		case ingredients.Cilantro:
-		case ingredients.RedOnion:
-		case ingredients.RomaineHead:
-		case ingredients.Avocado:
-		case ingredients.Tomato:
-			toChop = append(toChop, v)
-		}
-	}
-	if len(list) != len(toChop) {
-		return toChop, errors.New("un-choppable items have been removed from the chop list")
+func sliceOrDice(sliceOutcome ingredients.PreparedIngredient, diceOutcome ingredients.PreparedIngredient, instruction ingredients.ChopInstruction) ingredients.PreparedIngredient {
+	if instruction == ingredients.Dice {
+		return diceOutcome
 	} else {
-		return toChop, nil
+		return sliceOutcome
 	}
 }
 
-func Chop(chopOrder []ingredients.RawIngredient) {
-	// Ensure we're only chopping the good stuff
-	_, chopErrors := verifyNeedsChop(chopOrder)
-	if chopErrors != nil {
-		println(chopErrors)
+func prep(item ingredients.ChopItem) ingredients.PreparedIngredient {
+	var prepared ingredients.PreparedIngredient
+	switch item.Raw {
+	case ingredients.Avocado:
+		prepared = sliceOrDice(ingredients.SlicedAvocado, ingredients.DicedAvocado, item.Instruction)
+	case ingredients.BellPepper:
+		prepared = ingredients.SlicedBellPepper
+	case ingredients.Cilantro:
+		prepared = ingredients.ChoppedCilantro
+	case ingredients.RedOnion:
+		prepared = sliceOrDice(ingredients.SlicedRedOnion, ingredients.DicedRedOnion, item.Instruction)
+	case ingredients.RomaineHead:
+		prepared = ingredients.ChoppedRomaine
+	case ingredients.Tomato:
+		prepared = ingredients.DicedTomato
+	}
+	return prepared
+}
+
+func Chop(chopOrder []ingredients.ChopItem) {
+	for _, item := range chopOrder {
+		prepared := prep(item)
 	}
 }
